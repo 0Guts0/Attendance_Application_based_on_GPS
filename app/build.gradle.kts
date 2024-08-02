@@ -61,6 +61,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.appcompat)
     implementation(libs.play.services.location)
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.constraintlayout.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -79,4 +81,7 @@ dependencies {
     implementation("androidx.camera:camera-view:1.2.2")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("com.google.zxing:core:3.4.1")
+    implementation("mysql:mysql-connector-java:8.0.30")
+    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("javax.persistence:javax.persistence-api:2.2")
 }
