@@ -84,4 +84,7 @@ dependencies {
     implementation("mysql:mysql-connector-java:8.0.30")
     implementation("com.google.code.gson:gson:2.8.6")
     implementation("javax.persistence:javax.persistence-api:2.2")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("mysql:mysql-connector-java:8.0.26")
 }

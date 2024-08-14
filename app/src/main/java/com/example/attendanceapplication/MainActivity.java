@@ -2,6 +2,7 @@ package com.example.attendanceapplication;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 检查是否已登录
+        if (!isLoggedIn()) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_main);
 
         TextView studentId = findViewById(R.id.student_id);
@@ -108,5 +116,9 @@ public class MainActivity extends AppCompatActivity {
                 // Permission denied
             }
         }
+    }
+    private boolean isLoggedIn() {
+        SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        return preferences.getBoolean("is_logged_in", false);
     }
 }
