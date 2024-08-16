@@ -3,10 +3,8 @@ package com.example.attendanceapplication;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,26 +14,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
-public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class LocationActivity extends AppCompatActivity implements AMapLocationListener {
+    private static final String TAG = "LocationActivity";
     private static final int REQUEST_LOCATION_PERMISSION = 1;
-    private FusedLocationProviderClient fusedLocationClient;
+
+    private MapView mapView;
+    private AMap aMap;
+    private AMapLocationClient locationClient;
+    private AMapLocationClientOption locationOption;
     private TextView addressTextView;
-    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +43,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create an Intent to go back to main page
                 Intent intent = new Intent(LocationActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -54,55 +50,22 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         });
 
         addressTextView = findViewById(R.id.address_text);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Initialize the map
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mapView = findViewById(R.id.map);
+        mapView.onCreate(savedInstanceState);
+        aMap = mapView.getMap();
 
+        // Request location permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
         } else {
-            getLocation();
-        }
-    }
-
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        fusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                if (task.isSuccessful() && task.getResult() != null) {
-                    Location location = task.getResult();
-                    LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(currentLatLng).title("You are here"));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
-
-                    // Get and display the address
-                    getAddressFromLocation(location);
-                } else {
-                    addressTextView.setText("Unable to get location");
-                }
+            try {
+                initializeLocationClient();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-        });
-    }
-
-    private void getAddressFromLocation(Location location) {
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            if (addresses != null && !addresses.isEmpty()) {
-                Address address = addresses.get(0);
-                addressTextView.setText(address.getAddressLine(0));
-            } else {
-                addressTextView.setText("Address not found");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            addressTextView.setText("Error getting address");
         }
     }
 
@@ -111,15 +74,74 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getLocation();
+                try {
+                    initializeLocationClient();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 addressTextView.setText("Permission denied");
             }
         }
     }
 
+    private void initializeLocationClient() throws Exception {
+        // Initialize privacy compliance
+        AMapLocationClient.updatePrivacyShow(this, true, true);
+        AMapLocationClient.updatePrivacyAgree(this, true);
+
+        // Initialize location client
+        locationClient = new AMapLocationClient(this);
+        locationOption = new AMapLocationClientOption();
+        locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        locationOption.setNeedAddress(true);
+        locationOption.setOnceLocation(true);
+        locationClient.setLocationOption(locationOption);
+        locationClient.setLocationListener(this);
+        locationClient.startLocation();
+    }
+
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation != null) {
+            Log.d(TAG, "Location changed: " + aMapLocation.toString());
+            if (aMapLocation.getErrorCode() == 0) {
+                LatLng currentLatLng = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+                aMap.addMarker(new MarkerOptions().position(currentLatLng).title("You are here"));
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
+
+                String address = aMapLocation.getAddress();
+                addressTextView.setText(address);
+            } else {
+                Log.e(TAG, "Location error, code: " + aMapLocation.getErrorCode() + ", message: " + aMapLocation.getErrorInfo());
+                addressTextView.setText("Location Error, ErrCode:"
+                        + aMapLocation.getErrorCode() + ", errInfo:"
+                        + aMapLocation.getErrorInfo());
+            }
+        } else {
+            Log.e(TAG, "Location result is null");
+            addressTextView.setText("Unable to get location");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+        if (locationClient != null) {
+            locationClient.onDestroy();
+        }
     }
 }

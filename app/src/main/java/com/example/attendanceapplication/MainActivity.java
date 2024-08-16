@@ -38,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        // 获取用户角色信息
+        String userRole = getUserRole();
+
+        // 根据用户角色信息显示不同的UI或功能
+        if (userRole != null) {
+            handleRoleBasedUI(userRole);
+        }
+
         setContentView(R.layout.activity_main);
 
         TextView studentId = findViewById(R.id.student_id);
@@ -46,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         Button generateQRButton = findViewById(R.id.button_generate_qr);
         Button scanQRButton = findViewById(R.id.button_scan_qr);
 
-        studentId.setText("Student ID: 2711683");
-        studentName.setText("Student Name: ZhanLiu");
+        studentId.setText("Student ID: 2711683");  // 示例数据
+        studentName.setText("Student Name: ZhanLiu");  // 示例数据
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -105,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
         Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview);
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -117,8 +125,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     private boolean isLoggedIn() {
         SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
         return preferences.getBoolean("is_logged_in", false);
+    }
+
+    private String getUserRole() {
+        SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        return preferences.getString("user_role", null);  // 从SharedPreferences中获取用户角色
+    }
+
+    private void handleRoleBasedUI(String role) {
+        // 根据角色信息调整UI或功能
+        switch (role) {
+            case "admin":
+                // 管理员功能设置
+                break;
+            case "student":
+                // 学生功能设置
+                break;
+            default:
+                // 其他角色处理
+                break;
+        }
     }
 }
