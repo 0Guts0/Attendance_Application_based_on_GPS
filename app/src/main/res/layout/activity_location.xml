@@ -6,15 +6,36 @@
     <com.amap.api.maps.MapView
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/info_container"/>
 
-    <TextView
-        android:id="@+id/address_text"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/info_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Address"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"/>
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/address_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address"/>
+
+        <TextView
+            android:id="@+id/latitude_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Latitude"/>
+
+        <TextView
+            android:id="@+id/longitude_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Longitude"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/back_button"

@@ -33,6 +33,8 @@ public class LocationActivity extends AppCompatActivity implements AMapLocationL
     private AMapLocationClient locationClient;
     private AMapLocationClientOption locationOption;
     private TextView addressTextView;
+    private TextView latitudeTextView;
+    private TextView longitudeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class LocationActivity extends AppCompatActivity implements AMapLocationL
         });
 
         addressTextView = findViewById(R.id.address_text);
+        latitudeTextView = findViewById(R.id.latitude_text);
+        longitudeTextView = findViewById(R.id.longitude_text);
 
         // Initialize the map
         mapView = findViewById(R.id.map);
@@ -111,16 +115,22 @@ public class LocationActivity extends AppCompatActivity implements AMapLocationL
                 aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
 
                 String address = aMapLocation.getAddress();
-                addressTextView.setText(address);
+                addressTextView.setText("Address: " + address);
+                latitudeTextView.setText("Latitude: " + aMapLocation.getLatitude());
+                longitudeTextView.setText("Longitude: " + aMapLocation.getLongitude());
             } else {
                 Log.e(TAG, "Location error, code: " + aMapLocation.getErrorCode() + ", message: " + aMapLocation.getErrorInfo());
                 addressTextView.setText("Location Error, ErrCode:"
                         + aMapLocation.getErrorCode() + ", errInfo:"
                         + aMapLocation.getErrorInfo());
+                latitudeTextView.setText("Latitude: N/A");
+                longitudeTextView.setText("Longitude: N/A");
             }
         } else {
             Log.e(TAG, "Location result is null");
             addressTextView.setText("Unable to get location");
+            latitudeTextView.setText("Latitude: N/A");
+            longitudeTextView.setText("Longitude: N/A");
         }
     }
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,10 +28,12 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CAMERA_PERMISSION = 200;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+    private PreviewView previewView;  // 提前声明
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // 检查是否已登录
         if (!isLoggedIn()) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
@@ -47,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
             handleRoleBasedUI(userRole);
         }
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);  // 确保布局视图初始化
+
+        previewView = findViewById(R.id.preview_view);  // 初始化 PreviewView
 
         TextView studentId = findViewById(R.id.student_id);
         TextView studentName = findViewById(R.id.student_name);
@@ -58,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         studentId.setText("Student ID: 2711683");  // 示例数据
         studentName.setText("Student Name: ZhanLiu");  // 示例数据
 
+        // 检查相机权限
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
@@ -108,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 .requireLensFacing(CameraSelector.LENS_FACING_BACK)
                 .build();
 
-        PreviewView previewView = findViewById(R.id.preview_view);
+        // 确保在 PreviewView 准备好时设置 SurfaceProvider
         preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
         Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview);
@@ -121,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startCamera();
             } else {
-                // Permission denied
+                // 权限被拒绝，显示提示或禁用功能
+                Toast.makeText(this, "Camera permission is required to use this feature.", Toast.LENGTH_SHORT).show();
             }
         }
     }

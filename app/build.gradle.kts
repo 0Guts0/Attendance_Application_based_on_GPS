@@ -88,4 +88,5 @@ dependencies {
     implementation ("com.amap.api:3dmap:5.0.0")
     implementation ("com.amap.api:location:6.4.5")
     implementation ("com.amap.api:search:5.0.0")
+    implementation ("androidx.sqlite:sqlite:2.1.0")
 }
