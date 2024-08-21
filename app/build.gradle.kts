@@ -1,6 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.androidApplication)
 }
 
 android {
@@ -15,9 +14,6 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     buildTypes {
@@ -33,60 +29,19 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.play.services.location)
-    implementation(libs.androidx.room.common)
-    implementation(libs.androidx.constraintlayout.compose)
-    implementation(files("libs/mysql-connector-java-8.0.28.jar"))
+    implementation(libs.utilcodex)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.activity)
+    implementation(libs.constraintlayout)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-
-    // Kotlin DSL language
-    // CameraX core library
-    implementation("androidx.camera:camera-core:1.2.2")
-    implementation("androidx.camera:camera-camera2:1.2.2")
-    // CameraX lifecycle library
-    implementation("androidx.camera:camera-lifecycle:1.2.2")
-    // CameraX View class
-    implementation("androidx.camera:camera-view:1.2.2")
-    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
-    implementation("com.google.zxing:core:3.4.1")
-    implementation("com.google.code.gson:gson:2.8.6")
-    implementation("javax.persistence:javax.persistence-api:2.2")
-    implementation("org.mariadb.jdbc:mariadb-java-client:2.7.2")
-    implementation ("com.amap.api:3dmap:5.0.0")
-    implementation ("com.amap.api:location:6.4.5")
-    implementation ("com.amap.api:search:5.0.0")
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
     implementation ("androidx.sqlite:sqlite:2.1.0")
+    implementation("com.google.zxing:core:3.4.1")
+    implementation("com.github.maning0303:MNZXingCode:V2.1.9")
+
 }

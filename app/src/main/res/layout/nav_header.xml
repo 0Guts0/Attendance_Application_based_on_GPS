@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="35dp">
+
+    <TextView
+        android:id="@+id/tv_user_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
+        android:padding="15dp" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp" />
+
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp" />
+
+    <TextView
+        android:id="@+id/tv_role"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp" />
+
+    <TextView
+        android:id="@+id/tv_major"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp" />
+
+    <Button
+        android:id="@+id/btn_login_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LoginOut" />
+</LinearLayout>

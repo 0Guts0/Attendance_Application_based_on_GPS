@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:title="Register"
+        android:id="@+id/toolbar"
         app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
-        app:title="Login"
-        app:titleCentered="true"
-        tools:ignore="MissingClass" />
+        app:titleCentered="true" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -23,6 +20,27 @@
         android:orientation="vertical"
         android:paddingHorizontal="25dp">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name："
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ed_user_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Please enter your name"
+                android:textSize="14dp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,9 +60,49 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:hint="Please enter your email address"
+                android:inputType="textEmailAddress"
                 android:textSize="14dp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Major："
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ed_major"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Please enter your major"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/rg_role"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_student"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student" />
+
+            <RadioButton
+                android:id="@+id/rb_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Teacher" />
+        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,27 +122,16 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:hint="Please input a password"
+                android:inputType="textPassword"
                 android:textSize="14dp" />
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="25dp"
             android:layout_marginTop="25dp"
-            android:text="Login" />
-
-        <TextView
-            android:id="@+id/tv_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="25dp"
-            android:text="Register"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            android:text="Register" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.appcompat.widget.LinearLayoutCompat>

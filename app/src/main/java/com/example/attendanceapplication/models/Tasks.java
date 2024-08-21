@@ -1,28 +1,26 @@
 package com.example.attendanceapplication.models;
 
-import javax.persistence.*;
-import java.util.Date;
-
-@Entity
 public class Tasks {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer taskId;
 
-    @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "courseId")
-    private Course course;
-
-    @ManyToOne
-    @JoinColumn(name = "created_by", referencedColumnName = "userId")
-    private Users createdBy;
-
+    private Integer courseId;
+    private Integer teacherId;
     private String location;
-    private Date limitTime;
-    private Date endTime;
+    private Long limitTime;
+    private Long endTime;
 
-    // Getters and Setters
+    public Tasks() {
+    }
+
+    public Tasks(Integer taskId, Integer courseId, Integer teacherId, String location, Long limitTime, Long endTime) {
+        this.taskId = taskId;
+        this.courseId = courseId;
+        this.teacherId = teacherId;
+        this.location = location;
+        this.limitTime = limitTime;
+        this.endTime = endTime;
+    }
+
     public Integer getTaskId() {
         return taskId;
     }
@@ -31,20 +29,20 @@ public class Tasks {
         this.taskId = taskId;
     }
 
-    public Course getCourse() {
-        return course;
+    public Integer getCourseId() {
+        return courseId;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 
-    public Users getCreatedBy() {
-        return createdBy;
+    public Integer getTeacherId() {
+        return teacherId;
     }
 
-    public void setCreatedBy(Users createdBy) {
-        this.createdBy = createdBy;
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getLocation() {
@@ -55,19 +53,31 @@ public class Tasks {
         this.location = location;
     }
 
-    public Date getLimitTime() {
+    public Long getLimitTime() {
         return limitTime;
     }
 
-    public void setLimitTime(Date limitTime) {
+    public void setLimitTime(Long limitTime) {
         this.limitTime = limitTime;
     }
 
-    public Date getEndTime() {
+    public Long getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Long endTime) {
         this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Tasks{" +
+                "taskId=" + taskId +
+                ", courseId=" + courseId +
+                ", teacherId=" + teacherId +
+                ", location='" + location + '\'' +
+                ", limitTime=" + limitTime +
+                ", endTime=" + endTime +
+                '}';
     }
 }

@@ -1,15 +1,7 @@
 package com.example.attendanceapplication.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class User {
 
-@Entity
-public class Users {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
     private String userName;
@@ -18,6 +10,37 @@ public class Users {
     private String email;
     private String major;
     private String password;
+    private Long signTime=0L;
+
+    private String semester;
+
+    public User() {
+    }
+
+    public User(String userName, String currentLocation, String role, String email, String major, String password) {
+        this.userName = userName;
+        this.currentLocation = currentLocation;
+        this.role = role;
+        this.email = email;
+        this.major = major;
+        this.password = password;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public Long getSignTime() {
+        return signTime;
+    }
+
+    public void setSignTime(Long signTime) {
+        this.signTime = signTime;
+    }
 
     // Getters and Setters
     public Integer getUserId() {
@@ -74,5 +97,18 @@ public class Users {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", currentLocation='" + currentLocation + '\'' +
+                ", role='" + role + '\'' +
+                ", email='" + email + '\'' +
+                ", major='" + major + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

@@ -1,31 +1,21 @@
 package com.example.attendanceapplication.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
-import java.util.Date;
-
-@Entity
 public class Attendance {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer attendanceId;
+    private Integer taskId;
+    private Integer studentId;
+    private Long signTime;
 
-    @ManyToOne
-    @JoinColumn(name = "task_id", referencedColumnName = "taskId")
-    private Tasks task;
+    public Attendance(Integer attendanceId, Integer taskId, Integer studentId, Long signTime) {
+        this.attendanceId = attendanceId;
+        this.taskId = taskId;
+        this.studentId = studentId;
+        this.signTime = signTime;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "userId")
-    private Users student;
+    public Attendance() {
+    }
 
-    private Date signTime;
-
-    // Getters and Setters
     public Integer getAttendanceId() {
         return attendanceId;
     }
@@ -34,27 +24,27 @@ public class Attendance {
         this.attendanceId = attendanceId;
     }
 
-    public Tasks getTask() {
-        return task;
+    public Integer getTaskId() {
+        return taskId;
     }
 
-    public void setTask(Tasks task) {
-        this.task = task;
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
     }
 
-    public Users getStudent() {
-        return student;
+    public Integer getStudentId() {
+        return studentId;
     }
 
-    public void setStudent(Users student) {
-        this.student = student;
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
     }
 
-    public Date getSignTime() {
+    public Long getSignTime() {
         return signTime;
     }
 
-    public void setSignTime(Date signTime) {
+    public void setSignTime(Long signTime) {
         this.signTime = signTime;
     }
 }
