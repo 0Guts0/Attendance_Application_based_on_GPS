@@ -54,10 +54,10 @@ public class SignAdapter extends RecyclerView.Adapter<SignAdapter.MyViewHolder> 
         User dataModel = dataList.get(position);
         holder.tvName.setText(dataModel.getUserName());
         if (dataModel.getSignTime() > 0) {
-            holder.tvStatus.setText("已签到");
+            holder.tvStatus.setText("Signed in");
             holder.tvTime.setText(TimeUtils.millis2String(dataModel.getSignTime()));
         } else {
-            holder.tvStatus.setText("未签到");
+            holder.tvStatus.setText("Not signed in");
             holder.tvTime.setText("");
 
         }

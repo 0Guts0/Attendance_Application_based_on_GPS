@@ -5,16 +5,16 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
+    android:background="?attr/colorSurface"
     tools:openDrawer="left">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="?attr/colorSurface"
+        android:padding="16dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -22,21 +22,31 @@
             android:layout_height="wrap_content"
             app:navigationIcon="@android:drawable/ic_menu_always_landscape_portrait"
             app:title="Create Courses"
-            app:titleCentered="true" />
+            app:titleCentered="true"
+            android:elevation="4dp"
+            android:background="?attr/colorPrimary" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:paddingHorizontal="15dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:paddingHorizontal="8dp"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:elevation="2dp"
+            android:background="?attr/colorSurface" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CREATE" />
+            android:layout_gravity="center"
+            android:layout_marginVertical="25dp"
+            android:text="Create"
+            app:cornerRadius="4dp"
+            android:backgroundTint="?attr/colorPrimary"
+            android:textColor="@android:color/white"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -45,5 +55,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header" />
+        app:headerLayout="@layout/nav_header"
+        android:background="?attr/colorSurface"
+        android:elevation="8dp" />
+
 </androidx.drawerlayout.widget.DrawerLayout>

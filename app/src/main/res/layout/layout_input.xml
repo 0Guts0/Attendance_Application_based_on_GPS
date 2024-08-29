@@ -10,14 +10,14 @@
         android:id="@+id/ed_input1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入课程名称"
+        android:hint="Please enter a course name"
         android:singleLine="true" />
 
     <EditText
         android:id="@+id/ed_input2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入持续时间(分钟)"
+        android:hint="Please enter a durantion time(Minute)"
         android:inputType="number"
         android:singleLine="true" />
 

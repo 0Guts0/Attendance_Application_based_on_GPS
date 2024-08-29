@@ -51,7 +51,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.MyViewHo
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Courses dataModel = dataList.get(position);
-        holder.textView.setText(dataModel.getCourseName() + "(" + dataModel.getDuration() + "分钟)");
+        holder.textView.setText(dataModel.getCourseName() + "(" + dataModel.getDuration() + "Minute)");
         if (isStudent) {
             holder.tvDel.setVisibility(View.GONE);
         } else {

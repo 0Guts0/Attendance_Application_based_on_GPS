@@ -15,17 +15,17 @@ public class QRCodeGenerator {
 
     public static Bitmap generateQRCode(String data, int width, int height) {
         try {
-            // 创建QRCodeWriter实例
+            // Creating a QRCodeWriter instance
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
 
-            // 设置编码参数
+            // Setting the encoding parameters
             Map<EncodeHintType, Object> hints = new HashMap<>();
-            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8"); // 字符编码
-            hints.put(EncodeHintType.MARGIN, 1); // 边距，最小为0
-            // 生成BitMatrix（二维码的矩阵表示）
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8"); // character encoding
+            hints.put(EncodeHintType.MARGIN, 1); // Margins, minimum 0
+            // Generate BitMatrix (matrix representation of QR code)
             BitMatrix bitMatrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, width, height, hints);
 
-            // 初始化Bitmap
+            // Initialize Bitmap
             int[] pixels = new int[width * height];
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
@@ -37,7 +37,7 @@ public class QRCodeGenerator {
                 }
             }
 
-            // 根据像素数组生成Bitmap
+            // Generate Bitmap from pixel array
             Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
             return bitmap;

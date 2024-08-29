@@ -86,7 +86,7 @@ public class StudentMainActivity extends AppCompatActivity {
                                 if (!resultSuccess.isEmpty() && isNumericWithDecimal(resultSuccess)) {
                                     ToastUtils.showLong(resultSuccess);
                                     int taskId = Integer.parseInt(resultSuccess);
-                                    Tasks tasks = taskDao.queryByTaskId(taskId);//任务存在
+                                    Tasks tasks = taskDao.queryByTaskId(taskId);//task exists
                                     if (tasks == null) {
                                         ToastUtils.showLong("Attendance Task does not exist");
                                         return;
